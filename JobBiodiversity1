@@ -9,6 +9,8 @@ for row in inf:
 	i = i+1
 	if row[8] == "**":
 		row[8] = 1
+		
+# This filters out junk values for the fraction of job types per 1000.  For example, if row[8] = 31.3 then 0.313% of the employment market has this job.
 	
 	if i > 1:
 		titleNum = int(row[3])+10000
