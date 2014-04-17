@@ -2,6 +2,7 @@ import csv
 import math
 
 inf = csv.reader(open('Country Job Data.csv',"rU"))
+# Data file containing Bureau of Labor Statistics
 
 i = 0
 for row in inf:
