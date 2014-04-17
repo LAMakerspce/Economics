@@ -1,0 +1,15 @@
+import csv
+import math
+
+inf = csv.reader(open('Country Job Data.csv',"rU"))
+
+i = 0
+for row in inf:
+	i = i+1
+	if row[8] == "**":
+		row[8] = 1
+	
+	if i > 1:
+		titleNum = int(row[3])+10000
+		if titleNum % 10000 == 0:
+			print i, row[8], math.log(float(row[8]))
