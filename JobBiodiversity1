@@ -5,14 +5,35 @@ inf = csv.reader(open('Country Job Data.csv',"rU"))
 # Data file containing Bureau of Labor Statistics
 
 i = 0
+j = 1
+k = 0
+entropy = 0
+entropyNum = []
+checkNum = []
 for row in inf:
 	i = i+1
 	if row[8] == "**":
 		row[8] = 1
-		
+
 # This filters out junk values for the fraction of job types per 1000.  For example, if row[8] = 31.3 then 0.313% of the employment market has this job.
-	
+
 	if i > 1:
 		titleNum = int(row[3])+10000
-		if titleNum % 10000 == 0:
-			print i, row[8], math.log(float(row[8]))
+		if titleNum % 10000 != 0:
+			checkNum.append(int(row[0]))
+			stateNum = int(row[0])
+#			print i, j, stateNum, titleNum, row[8], math.log(float(row[8])), entropy
+			if j == stateNum:
+				k = k+1
+				entropy = entropy - float(row[0])*(math.log(float(row[8]))/math.log(2.718281828))
+#				print j, k, row[8], entropy
+			else:
+				entropyNum.append(entropy)
+				j = j+1
+				k = 0
+				entropy = 0
+print entropyNum
+
+fileWriter = open('JobEntropy2013.csv',"wb")
+wr = csv.writer(fileWriter, quoting=csv.QUOTE_ALL)
+wr.writerow(entropyNum)
