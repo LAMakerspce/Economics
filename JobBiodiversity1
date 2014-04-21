@@ -4,6 +4,11 @@ import math
 inf = csv.reader(open('Country Job Data.csv',"rU"))
 # Data file containing Bureau of Labor Statistics
 
+fileWriter = open('JobEntropy2013.csv','wb')
+wr = csv.writer(fileWriter)
+label = ["State","Job entropy"]
+wr.writerow(label)
+
 i = 0
 j = 1
 k = 0
@@ -15,25 +20,26 @@ for row in inf:
 	if row[8] == "**":
 		row[8] = 1
 
-# This filters out junk values for the fraction of job types per 1000.  For example, if row[8] = 31.3 then 0.313% of the employment market has this job.
+# This filters out junk values for the fraction of job types per 1000 (per mill value).  For example, if row[8] = 31.3 then 0.313% of the employment market has this job.
 
 	if i > 1:
 		titleNum = int(row[3])+10000
 		if titleNum % 10000 != 0:
-			checkNum.append(int(row[0]))
+# Filter out the state totals by job title numbers.  The state totals all end in 0000
 			stateNum = int(row[0])
-#			print i, j, stateNum, titleNum, row[8], math.log(float(row[8])), entropy
+#			Sum of -p_i*ln(p_i) per state where p_i is the per mill value of a particular job title.
 			if j == stateNum:
 				k = k+1
 				entropy = entropy - float(row[0])*(math.log(float(row[8]))/math.log(2.718281828))
-#				print j, k, row[8], entropy
+#				Stop summing values per state when the state number changes.
 			else:
 				entropyNum.append(entropy)
+				if entropy != 0:
+					print j, row[2], entropy
+					data = row[2],entropy
+					wr.writerow(data)
 				j = j+1
 				k = 0
 				entropy = 0
-print entropyNum
 
-fileWriter = open('JobEntropy2013.csv',"wb")
-wr = csv.writer(fileWriter, quoting=csv.QUOTE_ALL)
-wr.writerow(entropyNum)
+print len(entropyNum)
