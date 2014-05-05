@@ -30,7 +30,7 @@ for row in inf:
 			employmentTotal = float(row[6])
 			
 		else:
-			employmentPerMil = float(row[6])/employmentTotal
+			employmentPerMil = 1000*(float(row[6])/employmentTotal)
 		if employmentPerMil == 0:
 			employmentPerMil = 1
 		print employmentPerMil
