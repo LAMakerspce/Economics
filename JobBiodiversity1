@@ -30,7 +30,7 @@ for row in inf:
 #			Sum of -p_i*ln(p_i) per state where p_i is the per mill value of a particular job title.
 			if j == stateNum:
 				k = k+1
-				entropy = entropy - float(row[0])*(math.log(float(row[8]))/math.log(2.718281828))
+				entropy = entropy - float(row[8])*(math.log(float(row[8]))/math.log(2.718281828))
 #				Stop summing values per state when the state number changes.
 			else:
 				entropyNum.append(entropy)
