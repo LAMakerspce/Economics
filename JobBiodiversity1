@@ -1,45 +1,45 @@
 import csv
 import math
 
-inf = csv.reader(open('Country Job Data.csv',"rU"))
+inf = csv.reader(open('2008dataFormatted.csv',"rU"))
 # Data file containing Bureau of Labor Statistics
 
-fileWriter = open('JobEntropy2013.csv','wb')
+fileWriter = open('JobEntropy2008.csv','wb')
 wr = csv.writer(fileWriter)
 label = ["State","Job entropy"]
 wr.writerow(label)
 
 i = 0
 j = 1
-k = 0
 entropy = 0
-entropyNum = []
-checkNum = []
+# Entropy is the Shannon entropy of job roles by state
+stateNumList = []
+stateNameList = []
+# These lists are used to store the name and order of states as the Shannon index is looped through by state.
 for row in inf:
 	i = i+1
 	if row[8] == "**":
 		row[8] = 1
-
 # This filters out junk values for the fraction of job types per 1000 (per mill value).  For example, if row[8] = 31.3 then 0.313% of the employment market has this job.
-
 	if i > 1:
-		titleNum = int(row[3])+10000
-		if titleNum % 10000 != 0:
-# Filter out the state totals by job title numbers.  The state totals all end in 0000
-			stateNum = int(row[0])
-#			Sum of -p_i*ln(p_i) per state where p_i is the per mill value of a particular job title.
-			if j == stateNum:
-				k = k+1
+		titleNum = int(row[3])
+# The titleNum is the number corresponding to a profession category.
+		stateNum = int(row[0])
+		stateName = row[2]
+		if j == stateNum:
+			stateNumList.append(stateNum)
+			stateNameList.append(stateName)
+			if titleNum%10000 > 0:
+# Filter out the state totals by job title numbers.  The state totals all end in 0000 or 0.
+# Calculate the Shannon entropy per state job market
 				entropy = entropy - float(row[8])*(math.log(float(row[8]))/math.log(2.718281828))
-#				Stop summing values per state when the state number changes.
-			else:
-				entropyNum.append(entropy)
-				if entropy != 0:
-					print j, row[2], entropy
-					data = row[2],entropy
-					wr.writerow(data)
-				j = j+1
-				k = 0
-				entropy = 0
-
-print len(entropyNum)
+		else:	
+			index = len(stateNameList)
+			if index > 0:
+				print stateNameList[index-1], entropy 
+				data = stateNameList[index-1],entropy
+				wr.writerow(data)
+			stateNameList = []
+			stateNumList = []
+			j = j+1
+			entropy = 0	
