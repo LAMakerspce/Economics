@@ -10,36 +10,31 @@ label = ["State","Job entropy"]
 wr.writerow(label)
 
 i = 0
-j = 1
+
+stateNum = 1
+stateName = []
 entropy = 0
 # Entropy is the Shannon entropy of job roles by state
-stateNumList = []
-stateNameList = []
+index = 0
+
 # These lists are used to store the name and order of states as the Shannon index is looped through by state.
 for row in inf:
 	i = i+1
-	if row[8] == "**":
-		row[8] = 1
-# This filters out junk values for the fraction of job types per 1000 (per mill value).  For example, if row[8] = 31.3 then 0.313% of the employment market has this job.
 	if i > 1:
-		titleNum = int(row[3])
-# The titleNum is the number corresponding to a profession category.
-		stateNum = int(row[0])
-		stateName = row[2]
-		if j == stateNum:
-			stateNumList.append(stateNum)
-			stateNameList.append(stateName)
-			if titleNum%10000 > 0:
-# Filter out the state totals by job title numbers.  The state totals all end in 0000 or 0.
-# Calculate the Shannon entropy per state job market
-				entropy = entropy - float(row[8])*(math.log(float(row[8]))/math.log(2.718281828))
-		else:	
-			index = len(stateNameList)
-			if index > 0:
-				print stateNameList[index-1], entropy 
-				data = stateNameList[index-1],entropy
-				wr.writerow(data)
-			stateNameList = []
-			stateNumList = []
-			j = j+1
-			entropy = 0	
+		if stateNum == int(row[0]):
+#The modulo statement filters out redundant entries
+			if int(row[3])%10000 > 0: entropy = entropy - float(row[8])*(math.log(float(row[8]))/math.log(2.718281828))
+			stateName.append(row[2])
+			index = index+1
+#Output entropy per state/territory
+		if stateNum != int(row[0]):
+			print stateName[index-1],entropy
+			data = stateName[index-1],entropy
+			wr.writerow(data)
+			stateNum = int(row[0])
+			entropy = 0
+#This captures the last state/territory in the file
+else:
+	print row[2],entropy
+	data = row[2],entropy
+	wr.writerow(data)
