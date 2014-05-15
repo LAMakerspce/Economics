@@ -20,6 +20,7 @@ index = 0
 # These lists are used to store the name and order of states as the Shannon index is looped through by state.
 for row in inf:
 	i = i+1
+	if row[8] == "**": row[8] = 1
 	if i > 1:
 		if stateNum == int(row[0]):
 #The modulo statement filters out redundant entries
