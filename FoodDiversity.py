@@ -13,14 +13,15 @@ def EntFunc(list,list2):
             Entropy = -1.0 * math.log(p) * p + Entropy
         k = k + 1
     if Entropy != 0:
-        data=zip[j],k,Entropy
+        NormalizedEntropy=Entropy/math.log(k)
+        data=zip[j],k,Entropy,NormalizedEntropy
         print data
         wr.writerow(data)
 
 #Take in data from ESRI business lists by zip code.
 #The entry matrix takes in values by zip code then the business name within the zip code.
 #The BusinessName list is there simply to take in business names and determine how often unique values repeat for diversity calculations.
-FilePrefix='SIC581208'
+FilePrefix='SIC5813'
 ReadFile = '{FilePrefix}.csv'.format(FilePrefix=FilePrefix)
 inf = csv.reader(open(ReadFile, "rU"))
 i = 0
@@ -44,7 +45,7 @@ entry.sort(key=lambda x: x[0])
 WriteFile='{FilePrefix}output.csv'.format(FilePrefix=FilePrefix)
 fileWriter = open(WriteFile,'wb')
 wr = csv.writer(fileWriter)
-label=["Zip code","Number of businesses","Shannon index of businesses in zip code"]
+label=["Zip code","Number of businesses","Shannon index of businesses in zip code","Normalized entropy"]
 wr.writerow(label)
 for i in range(0,len(entry[0])):
     if entry[0][i] == zip[j]:
