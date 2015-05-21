@@ -21,6 +21,7 @@ def EntFunc(list,list2):
 #Take in data from ESRI business lists by zip code.
 #The entry matrix takes in values by zip code then the business name within the zip code.
 #The BusinessName list is there simply to take in business names and determine how often unique values repeat for diversity calculations.
+#The FilePrefix is changed manually in the code to change the source file and the name of the output files.
 FilePrefix='SIC5813'
 ReadFile = '{FilePrefix}.csv'.format(FilePrefix=FilePrefix)
 inf = csv.reader(open(ReadFile, "rU"))
