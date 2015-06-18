@@ -19,10 +19,10 @@ def EntFunc(list,list2):
         wr.writerow(data)
 
 #Take in data from ESRI business lists by zip code.
-#The entry matrix takes in values by zip code then the business name within the zip code.  This file needs to be ordered by zip code.
+#The entry matrix takes in values by zip code then the business name within the zip code.  This file needs to be in ascending order by zip code.
 #The BusinessName list is there simply to take in business names and determine how often unique values repeat for diversity calculations.
 #The FilePrefix is changed manually in the code to change the source file and the name of the output files.
-#The header for this input file is: ObjectID	CONAME	ADDR	CITY16	STATE	STATE_NAME	ZIP	ZIP4	PHONE	SIC	NAICS_EXT	SALES_VOL	HDBRCH	NUMBER_EMP	EMPSIZ	FRNCOD	ISCODE	SQFT	MATCH_CODE	LOCNUM
+#The header for this input file is: ObjectID, CONAME, ADDR, CITY16, STATE, STATE_NAME, ZIP, ZIP4, PHONE, SIC, NAICS_EXT,SALES_VOL, HDBRCH, NUMBER_EMP, EMPSIZ, FRNCOD, ISCODE, SQFT, MATCH_CODE, LOCNUM
 FilePrefix='SIC5813'
 ReadFile = '{FilePrefix}.csv'.format(FilePrefix=FilePrefix)
 inf = csv.reader(open(ReadFile, "rU"))
