@@ -18,7 +18,7 @@ def EntFunc(list,list2):
 #        print data
         wr.writerow(data)
 
-#Take in data from ESRI business lists by zip code.
+#Take in data from ESRI business lists by zip code.  Each file is separated by a unique business code, such as a SICS or NAICS code.
 #The entry matrix takes in values by zip code then the business name within the zip code.  This file needs to be in ascending order by zip code.
 #The BusinessName list is there simply to take in business names and determine how often unique values repeat for diversity calculations.
 #The FilePrefix is changed manually in the code to change the source file and the name of the output files.
