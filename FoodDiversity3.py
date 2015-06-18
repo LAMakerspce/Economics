@@ -19,7 +19,7 @@ def EntFunc(list,list2):
         wr.writerow(data)
 
 #Take in data from ESRI business lists by zip code.
-#The entry matrix takes in values by zip code then the business name within the zip code.
+#The entry matrix takes in values by zip code then the business name within the zip code.  This file needs to be ordered by zip code.
 #The BusinessName list is there simply to take in business names and determine how often unique values repeat for diversity calculations.
 #The FilePrefix is changed manually in the code to change the source file and the name of the output files.
 FilePrefix='SIC5813'
@@ -119,7 +119,9 @@ for row in inf3:
         EntropyTest[5].append(int(row[6]))
         EntropyTest[6].append(int(row[7]))
 
-#Determine the average normalized entropy, otherwise known as Shannon's equitability, for each
+#Determine the average normalized entropy, otherwise known as Shannon's equitability, for each zip code.
+#Count up the number of food desert census tracts, according to each of the three USDA criteria, for each zip code.
+#Average Shannon equitability for zip codes with food deserts according to criteria 1, 2, and 3.
 UniqueZip = sorted(list(set(EntropyTest[0])), key=long)
 print len(EntropyTest[0]),UniqueZip
 d1=0
