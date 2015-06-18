@@ -40,6 +40,11 @@ for row in inf:
 zip = sorted(list(set(entry[0])),key=float)
 
 #Read in food desert data which contains both zip and ZCTA values.
+#First column: zip code
+#Second column: census tract
+#Third column: Food desert according to USDA criterion 1.  No access to a grocery store within 1 mile of residence, if in an urban area, or 10 miles if in a rural area.
+#Fourth column: Food desert according to USDA criterion 2.  No access to a grocery store within 0.5 miles of residence, if in an urban area, or 10 miles if in a rural area.
+#Fifth column:Food desert according to USDA criterion 3.  No access to a grocery store within 1 mile of residence, if in an urban area, or 20 miles if in a rural area.
 zipfile = 'CAFoodDesertZip.csv'
 zipreader = csv.reader(open(zipfile, "rU"))
 i=0
